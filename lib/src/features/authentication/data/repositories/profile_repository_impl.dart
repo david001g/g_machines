@@ -73,6 +73,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
         'id': profile.id,
         'full_name': profile.full_name,
         'is_admin': profile.is_admin,
+        'is_guest': profile.is_guest,
         'avatar_url': profile.avatar_url,
         'phone_number': profile.phone_number,
       }).match({'id': profile.id});

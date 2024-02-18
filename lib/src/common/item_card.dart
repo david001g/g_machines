@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ItemCard extends StatelessWidget {
@@ -24,13 +25,13 @@ class ItemCard extends StatelessWidget {
         margin: const EdgeInsets.all(0),
         elevation: 3,
         child: ListTile(
-          title: Text(title, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400)),
+          title: Text(title.tr(), style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400)),
           leading: icon,
           tileColor: Theme.of(context).colorScheme.primaryContainer,
           trailing: trailing,
           subtitle: subtitle != null
               ? Text(
-                  subtitle!,
+                  subtitle!.tr(),
                   style: const TextStyle(fontSize: 14.0),
                 )
               : null,

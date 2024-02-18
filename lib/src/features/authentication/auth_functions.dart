@@ -17,6 +17,7 @@ Future<String?> onSignup(SignupData signUpData) async {
       avatar_url: signUpData.additionalSignupData!['avatar_url'],
       phone_number: signUpData.additionalSignupData!['phone_number'],
       is_admin: false,
+      is_guest: true,
     );
 
     await supabase.from('profiles').update({

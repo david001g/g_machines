@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:g_machines/src/config/router/router.dart';
 import 'package:g_machines/src/core/constants/constants.dart';
 import 'package:g_machines/src/core/utils/print.dart';
 import 'package:g_machines/src/features/authentication/auth_functions.dart';
+import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -36,11 +38,18 @@ class AuthScreen extends StatelessWidget {
             userType: LoginUserType.intlPhone,
           ),
         ],
-        onSubmitAnimationCompleted: () {
+        onSubmitAnimationCompleted: () async{
           final supabase = Supabase.instance.client;
           final user = supabase.auth.currentUser;
           if (user != null) {
-            context.goNamed(AppRoutes.home.name);
+            final id = user.id;
+            await context.read<AuthenticationCubit>().getProfile(id);
+            final profile = context.read<AuthenticationCubit>().profile;
+            if (profile != null && profile.is_guest!) {
+              context.goNamed(AppRoutes.guest.name);
+            } else {
+              context.goNamed(AppRoutes.home.name);
+            }
           }
         },
         navigateBackAfterRecovery: true,
@@ -48,6 +57,7 @@ class AuthScreen extends StatelessWidget {
     );
   }
 }
+
 ///Login providers
 /*
     loginProviders: [

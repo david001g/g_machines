@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:g_machines/src/config/router/router.dart';
 import 'package:g_machines/src/core/constants/constants.dart';
@@ -15,7 +16,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       elevation: 4,
       centerTitle: true,
-      title: Text(name, style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
+      title: Text(name.tr(), style: const TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold)),
       automaticallyImplyLeading: true,
       leading: isHome ? Padding(
         padding: const EdgeInsets.only(left: 20.0),

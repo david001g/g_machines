@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/config/router/router.dart';
@@ -32,7 +33,7 @@ class VehiclePage extends StatelessWidget {
                   ? ElevatedButton.icon(
                       onPressed: () => context.pushNamed(AppRoutes.createVehicle.name),
                       icon: const Icon(Icons.add),
-                      label: const Text("Add"))
+                      label: const Text("Add").tr())
                   : null),
           VehicleListBloc(sectionId: sectionId),
         ],

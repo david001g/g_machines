@@ -3,6 +3,7 @@ import 'package:g_machines/src/common/error_page.dart';
 import 'package:g_machines/src/common/loading_page.dart';
 import 'package:g_machines/src/common/no_profile.dart';
 import 'package:g_machines/src/features/authentication/auth_screen.dart';
+import 'package:g_machines/src/features/authentication/guest_screen.dart';
 import 'package:g_machines/src/features/authentication/profile_screen.dart';
 import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
 import 'package:g_machines/src/features/problems/create_problem_screen.dart';
@@ -14,7 +15,7 @@ import 'package:g_machines/src/features/vehicles/vehicle_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-enum AppRoutes { home, vehicles, report,  auth, readProblem, createProblem, profile, createVehicle }
+enum AppRoutes { home, vehicles, report, auth, readProblem, createProblem, profile, createVehicle, guest }
 
 final goRouter = GoRouter(
   initialLocation: '/',
@@ -25,21 +26,22 @@ final goRouter = GoRouter(
       name: AppRoutes.auth.name,
       builder: (context, state) => const AuthScreen(),
       routes: [
+        GoRoute(path: 'guest', name: AppRoutes.guest.name, builder: (context, state) => const GuestScreen()),
         GoRoute(
-          redirect: (context,state) {
-            final supabase = Supabase.instance.client;
-            final session = supabase.auth.currentSession;
-            if (session == null) {
-              return '/';
-            }
-          },
+            redirect: (context, state) {
+              final supabase = Supabase.instance.client;
+              final session = supabase.auth.currentSession;
+              if (session == null) {
+                return '/';
+              }
+            },
             path: 'home',
             name: AppRoutes.home.name,
             builder: (context, state) {
-              final supabase = Supabase.instance.client;
+              //final supabase = Supabase.instance.client;
               ///Null check fail
-              final id = supabase.auth.currentUser!.id;
-              context.read<AuthenticationCubit>().getProfile(id);
+              //final id = supabase.auth.currentUser!.id;
+              //context.read<AuthenticationCubit>().getProfile(id);
               return BlocBuilder<AuthenticationCubit, AuthenticationState>(
                 builder: (context, state) {
                   switch (state.runtimeType) {
@@ -48,11 +50,13 @@ final goRouter = GoRouter(
                     case AuthenticationLoading:
                       return const LoadingPage();
                     case AuthenticationError:
+
                       /// TODO: get error message
                       return const ErrorPage();
                     case UserAuthenticated:
                       return const SectionScreen();
                     default:
+
                       /// TODO: get error message
                       return const ErrorPage();
                   }
@@ -103,7 +107,6 @@ final goRouter = GoRouter(
                             );
                           },
                         )
-
                       ],
                     ),
                   ]),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/item_card.dart';
@@ -54,9 +55,9 @@ class ReadProblemForm extends StatelessWidget {
                               QuickAlert.show(
                                 context: context,
                                 type: QuickAlertType.confirm,
-                                title: 'Do you want to delete this problem?',
-                                confirmBtnText: 'Yes',
-                                cancelBtnText: 'No',
+                                title: 'Do you want to delete this problem?'.tr(),
+                                confirmBtnText: 'Yes'.tr(),
+                                cancelBtnText: 'No'.tr(),
                                 confirmBtnColor: Colors.green,
                                 onConfirmBtnTap: () {
                                   context.read<ProblemCubit>().deleteProblem(snapshot.data!);
@@ -65,7 +66,7 @@ class ReadProblemForm extends StatelessWidget {
                                 },
                               );
                             },
-                            child: const Text('Solve'))
+                            child: Text('Solve'.tr()))
                         : const SizedBox(),
                   ],
                 );

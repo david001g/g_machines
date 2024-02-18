@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SectionTitle extends StatelessWidget {
@@ -14,7 +15,7 @@ class SectionTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(title, style: const TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic)),
+            Text(title.tr(), style: const TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic)),
             trailing ?? const SizedBox(),
           ],
         ),

@@ -15,7 +15,7 @@ class LogoAssets{
 class VehicleTypeAssets{
   static const String excavator = 'assets/machines/excavator.png';
   static const String bulldozer = 'assets/machines/bulldozer.png';
-  static const String gcb = 'assets/machines/gcb.png';
+  static const String gcb = 'assets/machines/jcb.png';
   static const String grader = 'assets/machines/grader.png';
   static const String loader = 'assets/machines/loader.png';
   static const String roller = 'assets/machines/roller.png';
@@ -29,4 +29,8 @@ class ProblemTypeAssets {
   static const String error = 'assets/problems/error.png';
   static const String service = 'assets/problems/service.png';
   static const String warning = 'assets/problems/warning.png';
+}
+
+class LottieAssets{
+  static const String contactUs = 'assets/contact.json';
 }

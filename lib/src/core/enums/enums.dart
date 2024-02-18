@@ -14,5 +14,5 @@ enum VehicleTypes{
   ROLLER, //hengeres
   SPRINKLER,
   KCR,
-  GCB
+  JCB
 }

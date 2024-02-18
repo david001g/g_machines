@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/my_appbar.dart';
@@ -19,15 +20,15 @@ class ProfileScreen extends StatelessWidget {
       body: BlocBuilder<AuthenticationCubit, AuthenticationState>(builder: (BuildContext context, AuthenticationState state) {
         switch (state.runtimeType) {
           case AuthenticationEmpty:
-            return const Center(child: Text('No profile found'));
+            return Center(child: const Text('No profile found').tr());
           case AuthenticationLoading:
             return const Center(child: CircularProgressIndicator());
           case AuthenticationError:
-            return const Center(child: Text('Error loading profile'));
+            return Center(child: const Text('Error loading profile').tr());
           case UserAuthenticated:
             return const Center(child: ProfilePage());
           default:
-            return const Center(child: Text('Error loading profile'));
+            return Center(child: const Text('Error loading profile').tr());
         }
       }),
     );

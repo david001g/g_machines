@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/item_card.dart';
@@ -18,7 +19,7 @@ class ProfilePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(PageProperties.padding),
       child: Column(children: [
-         ItemCard(
+        ItemCard(
             title: profile.full_name!,
             subtitle: profile.phone_number!,
             trailing: const Icon(
@@ -29,9 +30,30 @@ class ProfilePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ElevatedButton(onPressed: () {}, child: const Text('HUN')),
-            ElevatedButton(onPressed: () {}, child: const Text('ENG')),
-            ElevatedButton(onPressed: () {}, child: const Text('中文'))
+            ElevatedButton(
+                onPressed: () async {
+                  await context.setLocale(const Locale('hu', 'HU'));
+                  final supabase = Supabase.instance.client;
+                  await supabase.auth.signOut();
+                  if (context.mounted) context.pushNamed(AppRoutes.auth.name);
+                },
+                child: const Text('HUN')),
+            ElevatedButton(
+                onPressed: () async {
+                  await context.setLocale(const Locale('en', 'US'));
+                  final supabase = Supabase.instance.client;
+                  await supabase.auth.signOut();
+                  if (context.mounted) context.pushNamed(AppRoutes.auth.name);
+                },
+                child: const Text('ENG')),
+            ElevatedButton(
+                onPressed: () async {
+                  await context.setLocale(const Locale('zh', 'CN'));
+                  final supabase = Supabase.instance.client;
+                  await supabase.auth.signOut();
+                  if (context.mounted) context.pushNamed(AppRoutes.auth.name);
+                },
+                child: const Text('中文')),
           ],
         ),
         const SectionTitle(title: 'Logout'),
@@ -41,7 +63,7 @@ class ProfilePage extends StatelessWidget {
               await supabase.auth.signOut();
               if (context.mounted) context.pushNamed(AppRoutes.auth.name);
             },
-            child: const Text('Logout'))
+            child: const Text('Logout').tr())
       ]),
     );
   }

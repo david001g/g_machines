@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,11 +8,7 @@ import 'package:g_machines/src/app.dart';
 import 'package:g_machines/src/core/constants/constants.dart';
 import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
 import 'package:g_machines/src/features/problems/view/bloc/problem_cubit.dart';
-import 'package:g_machines/src/features/sections/data/repositories/section_repository_impl.dart';
-import 'package:g_machines/src/features/sections/domain/entities/section.dart';
 import 'package:g_machines/src/features/sections/view/bloc/section_cubit.dart';
-import 'package:g_machines/src/features/vehicles/data/repositories/vehicle_repository_impl.dart';
-import 'package:g_machines/src/features/vehicles/domain/entities/vehicle_entity.dart';
 import 'package:g_machines/injection_container.dart';
 import 'package:g_machines/src/features/vehicles/view/bloc/vehicle_cubit.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -23,19 +20,20 @@ void main() async {
     url: Urls.supabaseUrl,
     anonKey: Urls.supabaseKey,
   );
-
-  //SectionRepositoryImpl sectionRepositoryImpl = SectionRepositoryImpl();
-
-  //final response = await sectionRepositoryImpl.deleteSection(2);
-
-  //response.fold((l) => print(l.message), (r) => print(r));
+  await EasyLocalization.ensureInitialized();
+  EasyLocalization.logger.enableBuildModes = [];
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(DevicePreview(
         enabled: !kReleaseMode,
-        builder: (context) => const MainApp(),
+        builder: (context) => EasyLocalization(
+            supportedLocales: const [Locale('en', 'US'), Locale('hu', 'HU'), Locale('zh', 'CN')],
+            path: 'assets/translations',
+            fallbackLocale: const Locale('en', 'US'),
+            useOnlyLangCode: false,
+            child: const MainApp()),
       )));
 }
 

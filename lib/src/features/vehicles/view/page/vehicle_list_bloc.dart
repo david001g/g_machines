@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
@@ -23,19 +24,19 @@ class VehicleListBloc extends StatelessWidget {
     return BlocBuilder<VehicleCubit, VehicleState>(builder: (BuildContext context, VehicleState state) {
       switch (state.runtimeType) {
         case VehicleEmpty:
-          return const Center(child: Text('No vehicles found'));
+          return Center(child: const Text('No vehicles found').tr());
         case VehicleLoading:
           return const Center(child: CircularProgressIndicator());
         case VehicleLoaded:
           final vehicles = state.props[0] as List<VehicleEntity>;
           return VehicleList(vehicles: vehicles);
         case VehicleError:
-          return const Center(
-            child: Text('Error loading vehicles'),
+          return Center(
+            child: Text('Error loading vehicles'.tr()),
           );
         default:
-          return const Center(
-            child: Text('Error loading vehicles'),
+          return Center(
+            child: Text('Error loading vehicles'.tr()),
           );
       }
     });

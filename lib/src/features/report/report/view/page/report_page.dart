@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/config/router/router.dart';
@@ -33,7 +34,7 @@ class ReportPage extends StatelessWidget {
                   : ElevatedButton.icon(
                       onPressed: () => context.pushNamed(AppRoutes.createProblem.name, queryParameters: {'vehicleId': vehicleId}),
                       icon: const Icon(Icons.add),
-                      label: const Text("Add"))),
+                      label: Text("Add".tr()))),
           ProblemComponent(vehicleId: vehicleId),
           //const SectionTitle(title: 'At Section 1'),
           //const MyMap(),

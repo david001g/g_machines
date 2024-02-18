@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/my_appbar.dart';
@@ -19,19 +20,19 @@ class SectionScreen extends StatelessWidget {
       body: BlocBuilder<SectionCubit, SectionState>(builder: (BuildContext context, SectionState state) {
         switch (state.runtimeType) {
           case SectionEmpty:
-            return const Center(child: Text('No sections found'));
+            return Center(child: Text('No sections found'.tr()));
           case SectionLoading:
             return const Center(child: CircularProgressIndicator());
           case SectionLoaded:
             final sections = state.props[0] as List<SectionEntity>;
             return SectionPage(sections: sections);
           case SectionError:
-            return const Center(
-              child: Text('Error loading sections'),
+            return Center(
+              child: Text('Error loading sections'.tr()),
             );
           default:
-            return const Center(
-              child: Text('Error loading sections'),
+            return Center(
+              child: Text('Error loading sections'.tr()),
             );
         }
       }),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -14,7 +15,7 @@ class CreateVehicleForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sectionNumbers = List.generate(13, (index) => index + 1);
+    final sectionNumbers = List.generate(9, (index) => index + 1);
 
     final formKey = GlobalKey<FormBuilderState>();
     return FormBuilder(
@@ -23,8 +24,8 @@ class CreateVehicleForm extends StatelessWidget {
         children: [
           FormBuilderDropdown(
             name: 'vehicleType',
-            decoration: const InputDecoration(
-              labelText: 'Vehicle type',
+            decoration: InputDecoration(
+              labelText: 'Vehicle type'.tr(),
             ),
             validator: FormBuilderValidators.required(),
             items: VehicleTypes.values
@@ -34,7 +35,7 @@ class CreateVehicleForm extends StatelessWidget {
                   child: Text(vehicleType
                       .toString()
                       .split('.')
-                      .last),
+                      .last).tr(),
                 ))
                 .toList(),
           ),
@@ -42,12 +43,12 @@ class CreateVehicleForm extends StatelessWidget {
               items: sectionNumbers.map((sectionNumber) =>
                   DropdownMenuItem(value: sectionNumber, child: Text(sectionNumber.toString()))).toList(),
               validator: FormBuilderValidators.required(),
-              decoration: const InputDecoration(labelText: 'Section number')),
+              decoration: InputDecoration(labelText: 'Section number'.tr())),
               const SizedBox(height: 20),
           FormBuilderTextField(
             name: 'plateNumber',
-            decoration: const InputDecoration(
-              labelText: 'Plate number',
+            decoration: InputDecoration(
+              labelText: 'Plate number'.tr(),
             ),
             validator: FormBuilderValidators.required(),
           ),
@@ -69,9 +70,9 @@ class CreateVehicleForm extends StatelessWidget {
                   QuickAlert.show(
                     context: context,
                     type: QuickAlertType.confirm,
-                    title: 'Do you want to submit this problem?',
-                    confirmBtnText: 'Yes',
-                    cancelBtnText: 'No',
+                    title: 'Do you want to submit this problem?'.tr(),
+                    confirmBtnText: 'Yes'.tr(),
+                    cancelBtnText: 'No'.tr(),
                     confirmBtnColor: Colors.green,
                     onConfirmBtnTap: () {
                       context.read<VehicleCubit>().createVehicle(vehicle);
@@ -81,7 +82,7 @@ class CreateVehicleForm extends StatelessWidget {
                   );
                 }
               },
-              child: const Text('Create')),
+              child: Text('Create'.tr())),
         ],
       ),
     );
