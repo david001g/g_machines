@@ -57,7 +57,7 @@ class SectionRepositoryImpl implements SectionRepository{
   Future<Either<Failure, List<SectionEntity>>> getSections() async{
     try {
       final supabase = Supabase.instance.client;
-      final response = await supabase.from('sections').select();
+      final response = await supabase.from('sections').select().order('section_number', ascending: true);
 
       return Right(response.map((e) => SectionModel.fromJson(e).toEntity()).toList());
     }
@@ -81,6 +81,20 @@ class SectionRepositoryImpl implements SectionRepository{
     catch(e){
       print(e);
       return const Left(SupaBaseFailure('Failed at updating section'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> countVehicles(int id) async{
+    try{
+      final supabase = Supabase.instance.client;
+      final response = await supabase.from('vehicles').select().eq('section_id', id);
+
+      return Right(response.length);
+    }
+    catch(e){
+      print(e);
+      return const Left(SupaBaseFailure('Failed at reading vehicles number'));
     }
   }
 

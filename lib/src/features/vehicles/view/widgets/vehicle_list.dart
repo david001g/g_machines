@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:g_machines/src/common/item_card_primary.dart';
+import 'package:g_machines/src/common/item_card.dart';
+import 'package:g_machines/src/config/router/router.dart';
+import 'package:g_machines/src/core/utils/get_vehicle_image.dart';
 import 'package:g_machines/src/features/vehicles/domain/entities/vehicle_entity.dart';
+import 'package:go_router/go_router.dart';
+import 'package:badges/badges.dart' as badges;
 
 class VehicleList extends StatelessWidget {
   final List<VehicleEntity> vehicles;
@@ -9,21 +13,19 @@ class VehicleList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: vehicles
-            .map((vehicle) => ItemCard(
-                  title: vehicle.name!,
-                  subtitle: vehicle.vehicle_type!,
-                  onTap: () {},
-                  icon: const Icon(Icons.directions_car),
-                  trailing: const SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Placeholder(),
-                  ),
-                ))
-            .toList());
+    return Column(
+        children: vehicles.map((vehicle){
+      return ItemCard(
+        title: vehicle.vehicle_type!,
+        subtitle: vehicle.plate_number!,
+        onTap: () => context.pushNamed(AppRoutes.report.name, queryParameters: {'vehicleId': vehicle.id!.toString()}),
+        icon: getVehicleImage(vehicle.vehicle_type!),
+        trailing: badges.Badge(
+          badgeContent: Text(vehicle.problem_count.toString()),
+          child: const Icon(Icons.report),
+        ),
+      );
+    }).toList());
   }
 }
+

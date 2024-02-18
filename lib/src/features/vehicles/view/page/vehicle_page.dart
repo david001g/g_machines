@@ -1,35 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:g_machines/src/config/router/router.dart';
+import 'package:g_machines/src/core/constants/constants.dart';
+import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
+import 'package:g_machines/src/features/report/report/view/widgets/section_title.dart';
 import 'package:g_machines/src/features/vehicles/domain/entities/vehicle_entity.dart';
-import 'package:g_machines/src/features/vehicles/view/bloc/vehicle_cubit.dart';
+import 'package:g_machines/src/features/vehicles/view/page/vehicle_list_bloc.dart';
 import 'package:g_machines/src/features/vehicles/view/widgets/vehicle_list.dart';
+import 'package:go_router/go_router.dart';
 
 class VehiclePage extends StatelessWidget {
-  const VehiclePage({super.key});
+  final String sectionId;
+
+  const VehiclePage({super.key, required this.sectionId});
 
   @override
   Widget build(BuildContext context) {
-    /// READ vehicles
-    context.read<VehicleCubit>().getVehicles();
+    final isAdmin = context.read<AuthenticationCubit>().isAdmin!;
 
-    return BlocBuilder<VehicleCubit, VehicleState>(builder: (BuildContext context, VehicleState state) {
-      switch (state.runtimeType) {
-        case VehicleEmpty:
-          return const Center(child: Text('No vehicles found'));
-        case VehicleLoading:
-          return const Center(child: CircularProgressIndicator());
-        case VehicleLoaded:
-          final vehicles = state.props[0] as List<VehicleEntity>;
-          return VehicleList(vehicles: vehicles);
-        case VehicleError:
-          return const Center(
-            child: Text('Error loading vehicles'),
-          );
-        default:
-          return const Center(
-            child: Text('Error loading vehicles'),
-          );
-      }
-    });
+    /// Here you can specify the layout of the page
+
+    return Padding(
+      padding: const EdgeInsets.all(PageProperties.padding),
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        children: [
+          SectionTitle(
+              title: 'Vehicles',
+              trailing: isAdmin
+                  ? ElevatedButton.icon(
+                      onPressed: () => context.pushNamed(AppRoutes.createVehicle.name),
+                      icon: const Icon(Icons.add),
+                      label: const Text("Add"))
+                  : null),
+          VehicleListBloc(sectionId: sectionId),
+        ],
+      ),
+    );
   }
 }

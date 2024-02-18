@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:g_machines/src/config/router/router.dart';
+import 'package:g_machines/src/core/constants/constants.dart';
+import 'package:g_machines/src/core/utils/print.dart';
 import 'package:g_machines/src/features/authentication/auth_functions.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -11,30 +14,36 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterLogin(
-        title: 'G-Machines',
+        //title: 'G-Machines',
+        logo: LogoAssets.whiteLogo,
         onLogin: onLogin,
-        onRecoverPassword: (String) {},
         onSignup: onSignup,
+        onRecoverPassword: (String) {},
         hideForgotPasswordButton: true,
         additionalSignupFields: [
           UserFormField(
             keyName: 'full_name',
             displayName: 'Full Name',
-            icon: Icon(Icons.person),
+            icon: const Icon(Icons.person),
             fieldValidator: (String) {},
             userType: LoginUserType.name,
           ),
           UserFormField(
-            keyName: 'username',
-            displayName: 'Username',
-            icon: Icon(Icons.person),
+            keyName: 'phone_number',
+            displayName: 'Phone Number',
+            icon: const Icon(Icons.phone),
             fieldValidator: (String) {},
-            userType: LoginUserType.name,
+            userType: LoginUserType.intlPhone,
           ),
         ],
         onSubmitAnimationCompleted: () {
-          context.goNamed(AppRoutes.home.name);
+          final supabase = Supabase.instance.client;
+          final user = supabase.auth.currentUser;
+          if (user != null) {
+            context.goNamed(AppRoutes.home.name);
+          }
         },
+        navigateBackAfterRecovery: true,
       ),
     );
   }

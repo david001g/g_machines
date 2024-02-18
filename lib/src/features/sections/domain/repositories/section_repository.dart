@@ -8,4 +8,5 @@ abstract class SectionRepository {
   Future<Either<Failure, bool>> updateSection(SectionEntity section);
   Future<Either<Failure, bool>> deleteSection(int id);
   Future<Either<Failure, SectionEntity>> getSection(int id);
+  Future<Either<Failure, int>> countVehicles(int id);
 }

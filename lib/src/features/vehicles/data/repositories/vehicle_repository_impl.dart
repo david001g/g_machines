@@ -9,10 +9,23 @@ class VehicleRepositoryImpl implements VehicleRepository {
   VehicleRepositoryImpl();
 
   @override
+  Future<Either<Failure, VehicleEntity>> getVehicle(int id) async {
+    try {
+      final supabase = Supabase.instance.client;
+      final response = await supabase.from('vehicles').select().eq('id', id).single();
+
+      return Right(VehicleModel.fromJson(response).toEntity());
+    } catch (e) {
+      print(e);
+      return const Left(SupaBaseFailure('Failed at reading vehicle'));
+    }
+  }
+
+  @override
   Future<Either<Failure, List<VehicleEntity>>> getVehicles() async {
     try {
       final supabase = Supabase.instance.client;
-      final response = await supabase.from('vehicles').select();
+      final response = await supabase.from('vehicles').select().order('vehicle_type');
 
       return Right(response.map((e) => VehicleModel.fromJson(e).toEntity()).toList());
     } catch (e) {
@@ -22,12 +35,25 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
+  Future<Either<Failure, List<VehicleEntity>>> getVehiclesBySection(int id) async {
+    try {
+      final supabase = Supabase.instance.client;
+      final response = await supabase.from('vehicles').select().eq('section_id', id).order('vehicle_type');
+
+      return Right(response.map((e) => VehicleModel.fromJson(e).toEntity()).toList());
+    } catch (e) {
+      print(e);
+      return const Left(SupaBaseFailure('Failed at reading vehicles by section'));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> createVehicle(VehicleEntity vehicle) async {
     try {
       final supabase = Supabase.instance.client;
       await supabase.from('vehicles').insert({
-        'name': vehicle.name,
         'vehicle_type': vehicle.vehicle_type,
+        'plate_number': vehicle.plate_number,
         'section_id': vehicle.section_id,
         'profil_id': vehicle.profil_id
       });
@@ -53,27 +79,15 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
-  Future<Either<Failure, VehicleEntity>> getVehicle(int id) async {
-    try{
-      final supabase = Supabase.instance.client;
-      final response = await supabase.from('vehicles').select().eq('id', id).single();
-
-      return Right(VehicleModel.fromJson(response).toEntity());
-    } catch (e) {
-      print(e);
-      return const Left(SupaBaseFailure('Failed at reading vehicle'));
-    }
-  }
-
-  @override
   Future<Either<Failure, bool>> updateVehicle(VehicleEntity vehicle) async {
     try {
       final supabase = Supabase.instance.client;
       await supabase.from('vehicles').update({
-        'name': vehicle.name,
         'vehicle_type': vehicle.vehicle_type,
+        'plate_number': vehicle.plate_number,
         'section_id': vehicle.section_id,
-        'profil_id': vehicle.profil_id
+        'profil_id': vehicle.profil_id,
+        'problem_count': vehicle.problem_count,
       }).match({'id': vehicle.id});
 
       return const Right(true);
@@ -81,5 +95,10 @@ class VehicleRepositoryImpl implements VehicleRepository {
       print(e);
       return const Left(SupaBaseFailure('Failed at updating vehicle'));
     }
+  }
+
+  @override
+  Future<Either<Failure, List<int>>> countProblems() async{
+    throw UnimplementedError();
   }
 }

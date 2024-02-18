@@ -13,9 +13,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       final supabase = Supabase.instance.client;
       await supabase.from('profiles').insert({
-        'username': profile.username,
         'full_name': profile.full_name,
+        'is_admin': profile.is_admin,
         'avatar_url': profile.avatar_url,
+        'phone_number': profile.phone_number,
       });
 
       return const Right(true);
@@ -70,9 +71,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final supabase = Supabase.instance.client;
       await supabase.from('profiles').update({
         'id': profile.id,
-        'username': profile.username,
         'full_name': profile.full_name,
+        'is_admin': profile.is_admin,
         'avatar_url': profile.avatar_url,
+        'phone_number': profile.phone_number,
       }).match({'id': profile.id});
 
       return const Right(true);

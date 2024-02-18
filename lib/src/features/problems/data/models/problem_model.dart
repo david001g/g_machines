@@ -1,0 +1,52 @@
+import 'package:g_machines/src/features/problems/domain/entities/problem_entity.dart';
+
+class ProblemModel extends ProblemEntity {
+  ProblemModel({
+    required String name,
+    int? id,
+    int? vehicle_id,
+    int? percentage,
+    int? quantity,
+    String? created_at,
+  }) : super(
+          name: name,
+          id: id,
+          vehicle_id: vehicle_id,
+          percentage: percentage,
+          quantity: quantity,
+          created_at: created_at,
+        );
+
+  factory ProblemModel.fromJson(Map<String, dynamic> json) {
+    return ProblemModel(
+      id: json['id'],
+      vehicle_id: json['vehicle_id'],
+      name: json['name'],
+      percentage: json['percentage'],
+      quantity: json['quantity'],
+      created_at: json['created_at'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'vehicle_id': vehicle_id,
+      'name': name,
+      'percentage': percentage,
+      'quantity': quantity,
+      'created_at': created_at,
+    };
+  }
+
+  ProblemEntity toEntity() {
+    return ProblemEntity(
+      id: id,
+      vehicle_id: vehicle_id,
+      name: name,
+      percentage: percentage,
+      quantity: quantity,
+      created_at: created_at,
+    );
+  }
+}

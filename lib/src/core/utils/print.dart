@@ -1,7 +1,7 @@
-void printWarning(String text) {
-  print('\x1B[33m$text\x1B[0m');
+void printWarning(Object? object) {
+  print('\x1B[33m$object\x1B[0m');
 }
 
-void printError(String text) {
-  print('\x1B[31m$text\x1B[0m');
+void printError(Object? object) {
+  print('\x1B[31m$object\x1B[0m');
 }

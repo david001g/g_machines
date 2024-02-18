@@ -1,6 +1,5 @@
 import 'package:flutter_login/flutter_login.dart';
 import 'package:g_machines/src/features/authentication/domain/entities/profile_entity.dart';
-import 'package:g_machines/src/features/authentication/domain/usecases/create_profile.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<String?> onSignup(SignupData signUpData) async {
@@ -15,14 +14,15 @@ Future<String?> onSignup(SignupData signUpData) async {
 
     ProfileEntity profile = ProfileEntity(
       full_name: signUpData.additionalSignupData!['full_name'],
-      username: signUpData.additionalSignupData!['username'],
       avatar_url: signUpData.additionalSignupData!['avatar_url'],
+      phone_number: signUpData.additionalSignupData!['phone_number'],
+      is_admin: false,
     );
 
     await supabase.from('profiles').update({
-      'username': profile.username,
       'full_name': profile.full_name,
       'avatar_url': profile.avatar_url,
+      'phone_number': profile.phone_number,
     }).match({'id': res.user!.id});
     return null;
   }

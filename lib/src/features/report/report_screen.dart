@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:g_machines/src/common/item_card_primary.dart';
+import 'package:g_machines/src/common/my_appbar.dart';
+import 'package:g_machines/src/features/report/report/view/page/report_page.dart';
 
 class ReportScreen extends StatelessWidget {
-  const ReportScreen({super.key});
+  final String vehicleId;
+
+  const ReportScreen({super.key, required this.vehicleId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Report'),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          ItemCard(
-            title: "Header",
-            icon: const Icon(Icons.accessible_forward_rounded),
-            onTap: (){},
-            trailing: trailing,
-          ),
-          const Text('Details screen'),
-        ],
-      ),
+      appBar: const MyAppBar(name: 'Report', isHome: false, isProfile: false),
+      body: ReportPage(vehicleId: vehicleId),
     );
   }
 }

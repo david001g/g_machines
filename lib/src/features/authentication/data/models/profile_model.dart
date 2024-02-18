@@ -2,21 +2,24 @@ import 'package:g_machines/src/features/authentication/domain/entities/profile_e
 
 class ProfileModel extends ProfileEntity{
   ProfileModel({
-    required String? username,
     required String? full_name,
+    required bool? is_admin,
+    required String? phone_number,
     String? id,
     String? avatar_url,
 }) : super(
-    username: username,
     full_name: full_name,
+    is_admin: is_admin,
+    phone_number: phone_number,
     id: id,
     avatar_url: avatar_url,
   );
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
     return ProfileModel(
-      username: json['username'],
       full_name: json['full_name'],
+      is_admin: json['is_admin'],
+      phone_number: json['phone_number'],
       id: json['id'],
       avatar_url: json['avatar_url'],
     );
@@ -24,8 +27,9 @@ class ProfileModel extends ProfileEntity{
 
   Map<String, dynamic> toJson() {
     return {
-      'username': username,
       'full_name': full_name,
+      'is_admin': is_admin,
+      'phone_number': phone_number,
       'id': id,
       'avatar_url': avatar_url,
     };
@@ -33,8 +37,9 @@ class ProfileModel extends ProfileEntity{
 
   ProfileEntity toEntity(){
     return ProfileEntity(
-      username: username,
       full_name: full_name,
+      is_admin: is_admin,
+      phone_number: phone_number,
       id: id,
       avatar_url: avatar_url,
     );

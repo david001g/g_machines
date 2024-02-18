@@ -4,15 +4,17 @@ class VehicleModel {
   final int? id;
   final int? section_id;
   final String? profil_id;
-  final String? name;
   final String? vehicle_type;
+  final String? plate_number;
+  final int? problem_count;
 
   VehicleModel({
     this.id,
     this.section_id,
     this.profil_id,
-    this.vehicle_type,
-    required this.name,
+    required this.vehicle_type,
+    required this.plate_number,
+    this.problem_count,
   });
 
   factory VehicleModel.fromJson(Map<String, dynamic> json) {
@@ -20,8 +22,9 @@ class VehicleModel {
       id: json['id'] as int?,
       section_id: json['section_id'] as int?,
       profil_id: json['profil_id'] as String?,
-      name: json['name'] as String?,
       vehicle_type: json['vehicle_type'] as String?,
+      plate_number: json['plate_number'] as String?,
+      problem_count: json['problem_count'] as int?,
     );
   }
 
@@ -30,8 +33,9 @@ class VehicleModel {
       'id': id,
       'section_id': section_id,
       'profil_id': profil_id,
-      'name': name,
       'vehicle_type': vehicle_type,
+      'plate_number': plate_number,
+      'problem_count': problem_count,
     };
   }
 
@@ -40,8 +44,9 @@ class VehicleModel {
       id: id,
       section_id: section_id,
       profil_id: profil_id,
-      name: name,
       vehicle_type: vehicle_type,
+      plate_number: plate_number,
+      problem_count: problem_count,
     );
   }
 }
