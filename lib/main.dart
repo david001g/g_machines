@@ -27,7 +27,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(DevicePreview(
-        enabled: !kReleaseMode,
+        enabled: false,
         builder: (BuildContext context) => EasyLocalization(
             supportedLocales: const [Locale('en', 'US'), Locale('hu', 'HU'), Locale('zh', 'CN')],
             path: 'assets/translations',
