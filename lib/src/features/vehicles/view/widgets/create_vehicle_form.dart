@@ -11,7 +11,8 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class CreateVehicleForm extends StatelessWidget {
-  const CreateVehicleForm({super.key});
+  final String sectionId;
+  const CreateVehicleForm({super.key, required this.sectionId});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class CreateVehicleForm extends StatelessWidget {
                     cancelBtnText: 'No'.tr(),
                     confirmBtnColor: Colors.green,
                     onConfirmBtnTap: () {
-                      context.read<VehicleCubit>().createVehicle(vehicle);
+                      context.read<VehicleCubit>().createVehicle(vehicle, int.parse(sectionId));
                       context.pop();
                       context.pop();
                     },

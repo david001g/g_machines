@@ -5,14 +5,15 @@ import 'package:g_machines/src/features/problems/view/widgets/read_problem_form.
 
 class ReadProblemPage extends StatelessWidget {
   final String problemId;
+  final String vehicleId;
 
-  const ReadProblemPage({super.key, required this.problemId});
+  const ReadProblemPage({super.key, required this.problemId, required this.vehicleId});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(PageProperties.padding),
-      child: ReadProblemForm(problemId: problemId),
+      child: ReadProblemForm(problemId: problemId, vehicleId: vehicleId),
     );
   }
 }

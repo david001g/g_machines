@@ -65,6 +65,13 @@ final goRouter = GoRouter(
             },
             routes: [
               GoRoute(
+                  redirect: (context, state) {
+                    final supabase = Supabase.instance.client;
+                    final session = supabase.auth.currentSession;
+                    if (session == null) {
+                      return '/';
+                    }
+                  },
                   path: 'vehicles',
                   name: AppRoutes.vehicles.name,
                   builder: (context, state) {
@@ -74,13 +81,29 @@ final goRouter = GoRouter(
                   },
                   routes: [
                     GoRoute(
+                      redirect: (context, state) {
+                        final supabase = Supabase.instance.client;
+                        final session = supabase.auth.currentSession;
+                        if (session == null) {
+                          return '/';
+                        }
+                      },
                       path: 'createVehicle',
                       name: AppRoutes.createVehicle.name,
                       builder: (context, state) {
-                        return const CreateVehicleScreen();
+                        return CreateVehicleScreen(
+                          sectionId: state.uri.queryParameters['sectionId']!,
+                        );
                       },
                     ),
                     GoRoute(
+                      redirect: (context, state) {
+                        final supabase = Supabase.instance.client;
+                        final session = supabase.auth.currentSession;
+                        if (session == null) {
+                          return '/';
+                        }
+                      },
                       path: 'report',
                       name: AppRoutes.report.name,
                       builder: (context, state) {
@@ -90,15 +113,30 @@ final goRouter = GoRouter(
                       },
                       routes: [
                         GoRoute(
+                          redirect: (context, state) {
+                            final supabase = Supabase.instance.client;
+                            final session = supabase.auth.currentSession;
+                            if (session == null) {
+                              return '/';
+                            }
+                          },
                           path: 'readProblem',
                           name: AppRoutes.readProblem.name,
                           builder: (context, state) {
                             return ReadProblemScreen(
                               problemId: state.uri.queryParameters['problemId']!,
+                              vehicleId: state.uri.queryParameters['vehicleId']!,
                             );
                           },
                         ),
                         GoRoute(
+                          redirect: (context, state) {
+                            final supabase = Supabase.instance.client;
+                            final session = supabase.auth.currentSession;
+                            if (session == null) {
+                              return '/';
+                            }
+                          },
                           path: 'createProblem',
                           name: AppRoutes.createProblem.name,
                           builder: (context, state) {
@@ -112,6 +150,13 @@ final goRouter = GoRouter(
                   ]),
             ]),
         GoRoute(
+          redirect: (context, state) {
+            final supabase = Supabase.instance.client;
+            final session = supabase.auth.currentSession;
+            if (session == null) {
+              return '/';
+            }
+          },
           path: 'profile',
           name: AppRoutes.profile.name,
           builder: (context, state) => const ProfileScreen(),

@@ -31,7 +31,7 @@ class VehiclePage extends StatelessWidget {
               title: 'Vehicles',
               trailing: isAdmin
                   ? ElevatedButton.icon(
-                      onPressed: () => context.pushNamed(AppRoutes.createVehicle.name),
+                      onPressed: () => context.pushNamed(AppRoutes.createVehicle.name, queryParameters: {'sectionId': sectionId}),
                       icon: const Icon(Icons.add),
                       label: const Text("Add").tr())
                   : null),

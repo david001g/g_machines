@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/item_card.dart';
 import 'package:g_machines/src/core/utils/get_problem_image.dart';
 import 'package:g_machines/src/features/authentication/view/bloc/authentication_cubit.dart';
-import 'package:g_machines/src/features/problems/domain/entities/problem_entity.dart';
 import 'package:g_machines/src/features/problems/view/bloc/problem_cubit.dart';
 import 'package:g_machines/src/features/report/report/view/widgets/section_title.dart';
 import 'package:go_router/go_router.dart';
@@ -13,8 +12,9 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class ReadProblemForm extends StatelessWidget {
   final String problemId;
+  final String vehicleId;
 
-  const ReadProblemForm({super.key, required this.problemId});
+  const ReadProblemForm({super.key, required this.problemId, required this.vehicleId});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class ReadProblemForm extends StatelessWidget {
                                 cancelBtnText: 'No'.tr(),
                                 confirmBtnColor: Colors.green,
                                 onConfirmBtnTap: () {
-                                  context.read<ProblemCubit>().deleteProblem(snapshot.data!);
+                                  context.read<ProblemCubit>().deleteProblem(snapshot.data!, int.parse(vehicleId));
                                   context.pop();
                                   context.pop();
                                 },

@@ -14,12 +14,7 @@ class VehicleListBloc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// READ vehicles
-    final isAdmin = context.read<AuthenticationCubit>().isAdmin!;
-    if (isAdmin) {
-      context.read<VehicleCubit>().getVehiclesBySection(int.parse(sectionId));
-    } else{
-      context.read<VehicleCubit>().getVehicles();
-    }
+    context.read<VehicleCubit>().getVehiclesBySection(int.parse(sectionId));
 
     return BlocBuilder<VehicleCubit, VehicleState>(builder: (BuildContext context, VehicleState state) {
       switch (state.runtimeType) {

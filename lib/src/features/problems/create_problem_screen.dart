@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:g_machines/src/common/my_appbar.dart';
 import 'package:g_machines/src/features/problems/view/page/create_problem_page.dart';
-import 'package:g_machines/src/features/vehicles/domain/entities/vehicle_entity.dart';
 
 class CreateProblemScreen extends StatelessWidget {
   final String vehicleId;

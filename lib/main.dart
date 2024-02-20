@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,17 +21,20 @@ void main() async {
     anonKey: Urls.supabaseKey,
   );
   await EasyLocalization.ensureInitialized();
-  EasyLocalization.logger.enableBuildModes = [];
+  //EasyLocalization.logger.enableBuildModes = [];
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]).then((value) => runApp(EasyLocalization(
-      supportedLocales: const [Locale('en', 'US'), Locale('hu', 'HU'), Locale('zh', 'CN')],
-      path: 'assets/translations',
-      fallbackLocale: const Locale('en', 'US'),
-      useOnlyLangCode: false,
-      child: const MainApp())));
+  ]).then((value) => runApp(DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (BuildContext context) => EasyLocalization(
+            supportedLocales: const [Locale('en', 'US'), Locale('hu', 'HU'), Locale('zh', 'CN')],
+            path: 'assets/translations',
+            fallbackLocale: const Locale('en', 'US'),
+            useOnlyLangCode: false,
+            child: const MainApp()),
+      )));
 }
 
 class MainApp extends StatelessWidget {

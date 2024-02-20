@@ -10,6 +10,6 @@ class ProblemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProblemList(problems: problems);
+    return ProblemList(problems: problems, vehicleId: vehicleId);
   }
 }

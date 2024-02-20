@@ -56,11 +56,11 @@ class ProblemCubit extends Cubit<ProblemState> {
         (problem) => emit(ProblemLoaded([problem])));
   }
 
-  Future<void> createProblem(ProblemEntity problem) async {
+  Future<void> createProblem(ProblemEntity problem, int id) async {
     emit(ProblemLoading());
     final result = await createProblemUsecase(problem);
     result.fold((failure) => emit(ProblemError(failure.message)),
-        (success) => success ? getProblems() : emit(const ProblemError('Error creating problem')));
+        (success) => success ? getProblemsByVehicle(id) : emit(const ProblemError('Error creating problem')));
   }
 
   Future<void> updateProblem(ProblemEntity problem) async {
@@ -70,11 +70,11 @@ class ProblemCubit extends Cubit<ProblemState> {
         (success) => success ? getProblems() : emit(const ProblemError('Error updating problem')));
   }
 
-  Future<void> deleteProblem(ProblemEntity problem) async {
+  Future<void> deleteProblem(ProblemEntity problem, int id) async {
     emit(ProblemLoading());
     final result = await deleteProblemUsecase(problem);
     result.fold((failure) => emit(ProblemError(failure.message)),
-        (success) => success ? getProblems() : emit(const ProblemError('Error deleting problem')));
+        (success) => success ? getProblemsByVehicle(id) : emit(const ProblemError('Error deleting problem')));
   }
 
 

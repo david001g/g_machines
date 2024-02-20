@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/features/problems/domain/entities/problem_entity.dart';
 import 'package:g_machines/src/features/problems/view/bloc/problem_cubit.dart';
 import 'package:g_machines/src/features/problems/view/page/problem_page.dart';
-import 'package:g_machines/src/features/vehicles/domain/entities/vehicle_entity.dart';
 
 class ProblemComponent extends StatelessWidget {
   final String vehicleId;

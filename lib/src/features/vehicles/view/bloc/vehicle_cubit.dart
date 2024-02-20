@@ -63,12 +63,12 @@ class VehicleCubit extends Cubit<VehicleState> {
     });
   }
 
-  Future<void> createVehicle(VehicleEntity vehicle) async {
+  Future<void> createVehicle(VehicleEntity vehicle, int sectionId) async {
     emit(VehicleLoading());
     final result = await createVehicleUsecase.call(vehicle);
     result.fold(
       (failure) => emit(VehicleError(message: failure.message)),
-      (vehicle) => getVehicles(),
+      (vehicle) => getVehiclesBySection(sectionId),
     );
   }
 

@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:g_machines/src/common/item_card.dart';
 import 'package:g_machines/src/config/router/router.dart';

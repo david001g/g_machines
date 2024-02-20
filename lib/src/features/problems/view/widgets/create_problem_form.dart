@@ -54,7 +54,7 @@ class CreateProblemForm extends StatelessWidget {
                     cancelBtnText: 'No'.tr(),
                     confirmBtnColor: Colors.green,
                     onConfirmBtnTap: () {
-                      context.read<ProblemCubit>().createProblem(problem);
+                      context.read<ProblemCubit>().createProblem(problem, int.parse(vehicleId));
                       context.pop();
                       context.pop();
                     },

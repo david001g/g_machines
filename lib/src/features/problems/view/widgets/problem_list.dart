@@ -13,8 +13,9 @@ import 'package:quickalert/quickalert.dart';
 
 class ProblemList extends StatelessWidget {
   final List<ProblemEntity> problems;
+  final String vehicleId;
 
-  const ProblemList({super.key, required this.problems});
+  const ProblemList({super.key, required this.problems, required this.vehicleId});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class ProblemList extends StatelessWidget {
         children: problems
             .map((problem) => ItemCard(
                   title: problem.name!,
-                  onTap: () => context.pushNamed(AppRoutes.readProblem.name, queryParameters: {'problemId': problem.id.toString()}),
+                  onTap: () => context.pushNamed(AppRoutes.readProblem.name, queryParameters: {'problemId': problem.id.toString(), 'vehicleId': vehicleId}),
                   trailing:  isAdmin ? IconButton(
                     onPressed: () {
                       QuickAlert.show(
@@ -34,7 +35,7 @@ class ProblemList extends StatelessWidget {
                           cancelBtnText: 'No'.tr(),
                           confirmBtnColor: Colors.green,
                           onConfirmBtnTap: () {
-                            context.read<ProblemCubit>().deleteProblem(problem);
+                            context.read<ProblemCubit>().deleteProblem(problem, int.parse(vehicleId));
                             context.pop();
                           });
                     },
