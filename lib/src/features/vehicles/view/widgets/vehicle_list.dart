@@ -15,15 +15,17 @@ class VehicleList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
         children: vehicles.map((vehicle){
+          final hasProblems = vehicle.problem_count! > 0;
+
       return ItemCard(
         title: vehicle.vehicle_type!,
         subtitle: vehicle.plate_number!,
         onTap: () => context.pushNamed(AppRoutes.report.name, queryParameters: {'vehicleId': vehicle.id!.toString()}),
         icon: getVehicleImage(vehicle.vehicle_type!),
-        trailing: badges.Badge(
+        trailing: hasProblems ? badges.Badge(
           badgeContent: Text(vehicle.problem_count.toString()),
           child: const Icon(Icons.report),
-        ),
+        ) : null,
       );
     }).toList());
   }
