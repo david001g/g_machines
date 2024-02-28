@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:g_machines/src/features/authentication/domain/entities/profile_entity.dart';
 import 'package:g_machines/src/features/problems/domain/entities/problem_entity.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/create_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/delete_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/get_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/get_problems.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/get_problems_by_vehicle.dart';
+import 'package:g_machines/src/features/problems/domain/usecases/get_profile_by_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/update_problem.dart';
 
 part 'problem_state.dart';
@@ -17,9 +19,10 @@ class ProblemCubit extends Cubit<ProblemState> {
   final GetProblems getProblemsUsecase;
   final GetProblemsByVehicle getProblemsByVehicleUsecase;
   final UpdateProblem updateProblemUsecase;
+  final GetProfileByProblem getProfileByProblemUsecase;
 
   ProblemCubit(this.createProblemUsecase, this.deleteProblemUsecase, this.getProblemUsecase, this.getProblemsUsecase,
-      this.getProblemsByVehicleUsecase, this.updateProblemUsecase)
+      this.getProblemsByVehicleUsecase, this.updateProblemUsecase, this.getProfileByProblemUsecase)
       : super(ProblemEmpty());
 
   Future<void> getProblems() async {
@@ -83,4 +86,8 @@ class ProblemCubit extends Cubit<ProblemState> {
     return result.fold((failure) => throw failure, (problem) => problem);
   }
 
+  Future<ProfileEntity> getProfileByProblem(int id) async {
+    final result = await getProfileByProblemUsecase(id);
+    return result.fold((failure) => throw failure, (profile) => profile);
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:g_machines/src/core/error/failure.dart';
+import 'package:g_machines/src/features/authentication/data/models/profile_model.dart';
+import 'package:g_machines/src/features/authentication/domain/entities/profile_entity.dart';
 import 'package:g_machines/src/features/problems/data/models/problem_model.dart';
 import 'package:g_machines/src/features/problems/domain/entities/problem_entity.dart';
 import 'package:g_machines/src/features/problems/domain/repositories/problem_repository.dart';
@@ -53,6 +55,7 @@ class ProblemRepositoryImpl implements ProblemRepository {
       final supabase = Supabase.instance.client;
       await supabase.from('problems').insert({
         'name': problem.name,
+        'profile_id': problem.profile_id,
         'vehicle_id': problem.vehicle_id,
         'percentage': problem.percentage,
         'quantity': problem.quantity,
@@ -101,6 +104,23 @@ class ProblemRepositoryImpl implements ProblemRepository {
     } catch (e) {
       print(e);
       return const Left(SupaBaseFailure('Failed at updating problem'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ProfileEntity>> getProfileByProblem(int id) async{
+    try{
+      final supabase = Supabase.instance.client;
+      final problem = await supabase.from('problems').select().match({'id' : id}).single();
+      final profileId = problem['profile_id'] as String;
+
+      final profile = await supabase.from('profiles').select().match({'id' : profileId}).single();
+      final profileModel = ProfileModel.fromJson(profile);
+
+      return Right(profileModel.toEntity());
+    } catch(e){
+      print(e);
+      return const Left(SupaBaseFailure('Failed at reading profile'));
     }
   }
 }

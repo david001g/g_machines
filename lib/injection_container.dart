@@ -12,6 +12,7 @@ import 'package:g_machines/src/features/problems/domain/usecases/delete_problem.
 import 'package:g_machines/src/features/problems/domain/usecases/get_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/get_problems.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/get_problems_by_vehicle.dart';
+import 'package:g_machines/src/features/problems/domain/usecases/get_profile_by_problem.dart';
 import 'package:g_machines/src/features/problems/domain/usecases/update_problem.dart';
 import 'package:g_machines/src/features/problems/view/bloc/problem_cubit.dart';
 import 'package:g_machines/src/features/sections/data/repositories/section_repository_impl.dart';
@@ -43,7 +44,7 @@ void setupLocator() {
   //cubit
   sl.registerFactory(() => SectionCubit(sl(), sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => VehicleCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
-  sl.registerFactory(() => ProblemCubit(sl(), sl(), sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => ProblemCubit(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
   sl.registerFactory(() => AuthenticationCubit(sl(), sl(), sl(), sl(), sl()));
 
   //use-cases
@@ -68,6 +69,7 @@ void setupLocator() {
   sl.registerLazySingleton(() => GetProblem(sl()));
   sl.registerLazySingleton(() => DeleteProblem(sl()));
   sl.registerLazySingleton(() => UpdateProblem(sl()));
+  sl.registerLazySingleton(() => GetProfileByProblem(sl()));
 
   sl.registerLazySingleton(() => CreateProfile(sl()));
   sl.registerLazySingleton(() => GetProfile(sl()));

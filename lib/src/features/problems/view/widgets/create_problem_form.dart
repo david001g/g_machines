@@ -8,6 +8,7 @@ import 'package:g_machines/src/features/problems/domain/entities/problem_entity.
 import 'package:g_machines/src/features/problems/view/bloc/problem_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CreateProblemForm extends StatelessWidget {
   final String vehicleId;
@@ -41,8 +42,12 @@ class CreateProblemForm extends StatelessWidget {
                 if (formKey.currentState!.saveAndValidate()) {
                   final data = formKey.currentState?.value['problem'].toString().split('.').last;
 
+                  final supabase = Supabase.instance.client;
+                  final id = supabase.auth.currentUser!.id;
+
                   ProblemEntity problem = ProblemEntity(
                     name: data,
+                    profile_id: id,
                     vehicle_id: int.parse(vehicleId),
                   );
 

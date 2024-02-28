@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:g_machines/src/common/my_appbar.dart';
 
 class NoProfile extends StatelessWidget {
   const NoProfile({super.key});
@@ -6,6 +7,7 @@ class NoProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      appBar: MyAppBar(isHome: false, name: 'Error', isProfile: true),
       body: Center(
         child: Text('No profile'),
       ),

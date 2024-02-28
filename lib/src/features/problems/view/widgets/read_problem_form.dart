@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:g_machines/src/common/item_card.dart';
@@ -19,19 +20,30 @@ class ReadProblemForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isAdmin = context.read<AuthenticationCubit>().isAdmin!;
-    final profile = context.read<AuthenticationCubit>().profile!;
 
     return SingleChildScrollView(
       child: Column(
         children: [
           const SectionTitle(title: 'Driver details'),
-          ItemCard(
-              title: profile.full_name!,
-              subtitle: profile.phone_number!,
-              trailing: const Icon(
-                Icons.account_circle_rounded,
-                size: 40.0,
-              )),
+          FutureBuilder(
+            future: context.read<ProblemCubit>().getProfileByProblem(int.parse(problemId)),
+            builder: (context,snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasError) {
+                return const Center(child: Text('Error'));
+              }
+              return ItemCard(
+                title: snapshot.data!.full_name!,
+                subtitle: snapshot.data!.phone_number!,
+                trailing: const Icon(
+                  Icons.account_circle_rounded,
+                  size: 40.0,
+                ),
+              );
+            },
+          ),
           const SectionTitle(title: 'Problem description'),
           FutureBuilder(
               future: context.read<ProblemCubit>().getProblemEntity(int.parse(problemId)),
